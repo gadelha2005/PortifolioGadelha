@@ -1,266 +1,757 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Pedro Gadelha</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedro Gadelha — Fullstack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --bg: #0c0c0e;
+  --bg2: #111114;
+  --bg3: #16161a;
+  --line: rgba(255,255,255,0.07);
+  --text: #e8e6e1;
+  --muted: #6e6d6a;
+  --accent: #6ee7b7;
+  --accent2: #818cf8;
+  --serif: 'DM Serif Display', serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* CURSOR */
+.cursor { position: fixed; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s; }
+.cursor-ring { position: fixed; width: 30px; height: 30px; border: 1px solid rgba(110,231,183,0.3); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem;
+  transition: background 0.4s, border-color 0.4s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled { background: rgba(12,12,14,0.92); backdrop-filter: blur(12px); border-color: var(--line); }
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.8rem; letter-spacing: 0.08em; color: var(--muted);
+  text-decoration: none; transition: color 0.3s; font-weight: 400;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cv {
+  font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 500;
+  color: var(--bg); background: var(--accent); padding: 0.55rem 1.3rem;
+  text-decoration: none; border-radius: 2px;
+  transition: opacity 0.3s;
+}
+.nav-cv:hover { opacity: 0.85; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--text); transition: all 0.3s; }
+
+/* HERO */
+#home {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 8rem 3rem 4rem;
+  position: relative; overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+}
+.hero-blob {
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(110,231,183,0.06) 0%, transparent 70%);
+  top: -100px; right: -100px; pointer-events: none;
+}
+.hero-blob2 {
+  position: absolute; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 70%);
+  bottom: 0; left: 10%; pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; width: 100%; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--accent); margin-bottom: 2rem; opacity: 0;
+}
+.hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+.hero-name {
+  font-family: var(--serif); font-size: clamp(3.5rem, 7vw, 6.5rem);
+  line-height: 1.0; font-weight: 400; margin-bottom: 1rem; opacity: 0;
+}
+.hero-name .line2 { display: block; font-style: italic; color: var(--muted); }
+.hero-headline {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted); max-width: 580px;
+  line-height: 1.7; margin-bottom: 3rem; font-weight: 300; opacity: 0;
+}
+.hero-headline strong { color: var(--text); font-weight: 400; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em;
+  color: var(--bg); background: var(--accent); padding: 0.85rem 2rem;
+  text-decoration: none; border-radius: 2px; transition: opacity 0.3s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8rem; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--text); border: 1px solid var(--line); padding: 0.85rem 2rem;
+  text-decoration: none; border-radius: 2px; transition: border-color 0.3s, color 0.3s;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--accent); }
+.hero-scroll {
+  position: absolute; bottom: 3rem; left: 3rem;
+  display: flex; align-items: center; gap: 1rem; z-index: 2; opacity: 0;
+}
+.hero-scroll span { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+.hero-scroll-line { width: 40px; height: 1px; background: var(--muted); }
+.hero-stack {
+  position: absolute; right: 3rem; bottom: 3rem; z-index: 2;
+  display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; opacity: 0;
+}
+.hero-stack span {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.hero-stack span::after { content: ''; width: 16px; height: 1px; background: rgba(110,231,183,0.3); }
+
+/* SECTION BASE */
+.section { padding: 7rem 3rem; max-width: 1100px; margin: 0 auto; }
+.section-full { padding: 7rem 0; }
+.section-inner { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+
+.section-header { margin-bottom: 4rem; }
+.section-number { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 0.75rem; display: block; }
+.section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.2; }
+.section-title em { font-style: italic; color: var(--muted); }
+
+.about-photo-wrap {
+  position: relative; margin-bottom: 2rem;
+  width: 120px; height: 120px;
+}
+.about-photo {
+  width: 120px; height: 120px; border-radius: 50%;
+  object-fit: cover; border: 2px solid rgba(110,231,183,0.25);
+  display: block;
+}
+.about-photo-ring {
+  position: absolute; inset: -6px; border-radius: 50%;
+  border: 1px solid rgba(110,231,183,0.12);
+  pointer-events: none;
+}
+
+/* ABOUT */
+#about { background: var(--bg2); }
+.about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 6rem; align-items: start; }
+.about-text p { font-size: 1rem; line-height: 1.9; color: var(--muted); margin-bottom: 1.4rem; font-weight: 300; }
+.about-text p strong { color: var(--text); font-weight: 400; }
+.about-details { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+.detail-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; background: var(--bg3); border: 1px solid var(--line); border-radius: 4px; }
+.detail-icon { color: var(--accent); font-size: 0.85rem; margin-top: 2px; flex-shrink: 0; }
+.detail-content {}
+.detail-label { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.detail-value { font-size: 0.9rem; color: var(--text); }
+.about-sidebar {}
+.knowledge-block { background: var(--bg3); border: 1px solid var(--line); border-radius: 4px; padding: 2rem; }
+.knowledge-block h4 { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+.knowledge-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.knowledge-list li { font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 0.7rem; }
+.knowledge-list li::before { content: '→'; color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
+
+/* SKILLS */
+#skills {}
+.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.skill-group {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 6px;
+  padding: 2rem; transition: border-color 0.3s;
+}
+.skill-group:hover { border-color: rgba(110,231,183,0.2); }
+.skill-group-label {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--accent);
+  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--line);
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--muted);
+  background: var(--bg3); border: 1px solid var(--line);
+  padding: 0.35rem 0.75rem; border-radius: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.skill-tag:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+.skill-tag.highlight { color: var(--text); border-color: rgba(110,231,183,0.2); background: rgba(110,231,183,0.04); }
+
+/* PROJECTS */
+#projects { background: var(--bg2); }
+.projects-list { display: flex; flex-direction: column; gap: 2px; }
+.project-card {
+  background: var(--bg3); border: 1px solid var(--line);
+  padding: 2.5rem 3rem; display: grid;
+  grid-template-columns: 1fr auto; gap: 2rem; align-items: start;
+  transition: border-color 0.4s, background 0.4s;
+  position: relative; overflow: hidden; border-radius: 4px;
+}
+.project-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--accent); transform: scaleY(0);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  transform-origin: bottom;
+}
+.project-card:hover { border-color: rgba(110,231,183,0.15); background: #1a1a1f; }
+.project-card:hover::before { transform: scaleY(1); }
+.project-number { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); margin-bottom: 1rem; letter-spacing: 0.1em; }
+.project-name { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 0.75rem; line-height: 1.1; }
+.project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 1.5rem; }
+.project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tech-pill {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--line);
+  padding: 0.25rem 0.65rem; border-radius: 20px;
+}
+.project-links { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; flex-shrink: 0; }
+.project-link {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted);
+  text-decoration: none; transition: color 0.3s;
+  white-space: nowrap;
+}
+.project-link:hover { color: var(--accent); }
+.project-featured-badge {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em;
+  color: var(--accent); border: 1px solid rgba(110,231,183,0.3);
+  padding: 0.25rem 0.6rem; border-radius: 2px; text-transform: uppercase;
+}
+
+/* CONTACT */
+#contact {}
+.contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: start; }
+.contact-left {}
+.contact-headline { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15; margin-bottom: 1.5rem; }
+.contact-headline em { font-style: italic; color: var(--muted); }
+.contact-sub { font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; }
+.contact-email {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 1rem; color: var(--text); text-decoration: none;
+  border-bottom: 1px solid rgba(110,231,183,0.3); padding-bottom: 0.25rem;
+  transition: color 0.3s, border-color 0.3s;
+}
+.contact-email:hover { color: var(--accent); border-color: var(--accent); }
+.contact-right { display: flex; flex-direction: column; gap: 1rem; padding-top: 1rem; }
+.social-link {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.2rem 1.5rem; background: var(--bg2);
+  border: 1px solid var(--line); border-radius: 4px;
+  text-decoration: none; color: var(--muted);
+  transition: border-color 0.3s, color 0.3s;
+}
+.social-link:hover { border-color: rgba(110,231,183,0.2); color: var(--text); }
+.social-link i { color: var(--accent); width: 16px; text-align: center; }
+.social-link span { font-size: 0.85rem; flex: 1; }
+.social-link .arrow { font-size: 0.7rem; opacity: 0.4; transition: opacity 0.3s, transform 0.3s; }
+.social-link:hover .arrow { opacity: 1; transform: translateX(3px); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--line); padding: 2.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+}
+footer p { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
+footer p span { color: var(--accent); }
+
+/* MOBILE NAV MENU */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: rgba(12,12,14,0.98); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--serif); font-size: 2.5rem; color: var(--text);
+  text-decoration: none; opacity: 0; transform: translateY(20px);
+  animation: mobileLink 0.4s forwards;
+}
+.mobile-menu a:nth-child(2) { animation-delay: 0.05s; }
+.mobile-menu a:nth-child(3) { animation-delay: 0.1s; }
+.mobile-menu a:nth-child(4) { animation-delay: 0.15s; }
+.mobile-menu a:nth-child(5) { animation-delay: 0.2s; }
+.mobile-menu a:nth-child(6) { animation-delay: 0.25s; }
+@keyframes mobileLink { to { opacity: 1; transform: none; } }
+.mobile-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 1.3rem; cursor: pointer;
+}
+
+/* REVEAL ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(32px); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 768px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  #home { padding: 7rem 1.5rem 5rem; }
+  .section { padding: 5rem 1.5rem; }
+  .section-inner { padding: 0 1.5rem; }
+  .section-full { padding: 5rem 0; }
+  .hero-scroll, .hero-stack { display: none; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .project-card { grid-template-columns: 1fr; padding: 1.75rem; }
+  .project-links { flex-direction: row; align-items: center; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+  .hero-name { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+}
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  .contact-email { font-size: 0.85rem; }
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">DEV GADELHA</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">Sobre</a>
-                <a href="#skills">Habilidades</a>
-                <a href="#projects">Projetos</a>
-                <a href="#social-contact">Contato</a>
-                <!-- Botão para baixar currículo no header -->
-                <a href="Currículo - Pedro Gadelha.pdf" download="Curriculo_Pedro_Gadelha.pdf" class="cta-btn-small">Baixar CV</a>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Home -->
-    <section id="home">
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#about" onclick="closeMobile()">Sobre</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#projects" onclick="closeMobile()">Projetos</a>
+  <a href="#contact" onclick="closeMobile()">Contato</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">Pedro<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="#contact">Contato</a></li>
+    <li><a href="Currículo - Pedro Gadelha.pdf" download class="nav-cv">Baixar CV</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-inner">
+    <p class="hero-tag">Fullstack Developer</p>
+    <h1 class="hero-name">
+      Pedro Gadelha
+      <span class="line2">Paula</span>
+    </h1>
+    <p class="hero-headline">
+      APIs REST com <strong>Java + Spring Boot</strong>. Interfaces com <strong>React + TypeScript</strong>. Do backend ao frontend.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary"><i class="fas fa-folder-open"></i> Ver Projetos</a>
+      <a href="https://github.com/gadelha2005" target="_blank" class="btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+      <a href="Currículo - Pedro Gadelha.pdf" download class="btn-secondary"><i class="fas fa-download"></i> CV</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+  <div class="hero-stack">
+    <span>Spring Boot</span>
+    <span>React</span>
+    <span>TypeScript</span>
+    <span>Docker</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section">
+    <div class="section-header reveal">
+      <span class="section-number">01 — SOBRE</span>
+      <h2 class="section-title">Quem sou <em>eu</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="about-photo-wrap">
+          <img src="images/foto.jpeg" alt="Pedro Gadelha" class="about-photo">
+          <div class="about-photo-ring"></div>
+        </div>
+        <p>Sou estudante de <strong>Ciência da Computação na Unifor</strong> (5º semestre), com foco em desenvolvimento fullstack — backend sólido e frontend funcional.</p>
+        <p>No backend, construo APIs REST com <strong>Java 17 + Spring Boot</strong>, autenticação JWT, testes com JUnit 5 e Mockito, e infraestrutura com Docker. No frontend, entrego interfaces com <strong>React + TypeScript</strong>, integrações limpas e componentes reutilizáveis.</p>
+        <p>Aplico <strong>SOLID, Clean Code e GRASP</strong> porque código limpo é código sustentável. Trabalho com MySQL, MongoDB e Firebase conforme a necessidade do projeto.</p>
+        <div class="about-details">
+          <div class="detail-item">
+            <i class="fas fa-graduation-cap detail-icon"></i>
+            <div class="detail-content">
+              <p class="detail-label">Formação</p>
+              <p class="detail-value">Ciência da Computação — Unifor · 5º semestre · Conclusão 2027.2</p>
+            </div>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-map-marker-alt detail-icon"></i>
+            <div class="detail-content">
+              <p class="detail-label">Localização</p>
+              <p class="detail-value">Fortaleza, CE — Brasil</p>
+            </div>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-language detail-icon"></i>
+            <div class="detail-content">
+              <p class="detail-label">Idiomas</p>
+              <p class="detail-value">Português (nativo) · Inglês (intermediário)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-sidebar reveal">
+        <div class="knowledge-block">
+          <h4>Conhecimentos Técnicos</h4>
+          <ul class="knowledge-list">
+            <li>APIs REST & Segurança (JWT)</li>
+            <li>Programação Orientada a Objetos</li>
+            <li>SOLID · GRASP · Clean Code</li>
+            <li>Estruturas de Dados & Algoritmos</li>
+            <li>Testes Unitários & TDD</li>
+            <li>Versionamento com Git/GitHub</li>
+            <li>Android Development (Kotlin)</li>
+            <li>Docker & CI/CD (Vercel)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section">
+    <div class="section-header reveal">
+      <span class="section-number">02 — HABILIDADES</span>
+      <h2 class="section-title">Stack <em>técnico</em></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <p class="skill-group-label">Backend</p>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">Java 17</span>
+          <span class="skill-tag highlight">Spring Boot</span>
+          <span class="skill-tag highlight">Spring Security</span>
+          <span class="skill-tag">JPA / Hibernate</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Express</span>
+          <span class="skill-tag">JWT</span>
+          <span class="skill-tag">Maven</span>
+          <span class="skill-tag">Flyway</span>
+          <span class="skill-tag">OpenFeign</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-label">Frontend</p>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">React 19</span>
+          <span class="skill-tag highlight">TypeScript</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Vite</span>
+          <span class="skill-tag">Tailwind CSS</span>
+          <span class="skill-tag">React Query</span>
+          <span class="skill-tag">Zustand</span>
+          <span class="skill-tag">Recharts</span>
+          <span class="skill-tag">React Router</span>
+          <span class="skill-tag">Axios</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-label">Banco de Dados & Mobile</p>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Firebase</span>
+          <span class="skill-tag">Prisma</span>
+          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag">Android</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-label">Infra & Testes</p>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">Docker</span>
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">JUnit 5</span>
+          <span class="skill-tag">Mockito</span>
+          <span class="skill-tag">CI/CD (Vercel)</span>
+          <span class="skill-tag">MapStruct</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section">
+    <div class="section-header reveal">
+      <span class="section-number">03 — PROJETOS</span>
+      <h2 class="section-title">Em <em>destaque</em></h2>
+    </div>
+    <div class="projects-list">
+
+      <div class="project-card reveal">
         <div>
-            <img src="images/foto.jpeg" alt="Foto de Perfil" class="profile-img">
-            <h1>Pedro Gadelha</h1>
-            <p>Desenvolvedor Full Stack | Ciência da Computação</p>
-            <p>Estudante de Ciência da Computação transformando linhas de código em soluções criativas e escaláveis.</p>
-            <div class="home-buttons">
-                <a href="#projects" class="cta-btn">Ver Projetos</a>
-                <a href="https://github.com/gadelha2005" class="cta-btn">GitHub</a>
-                <a href="Currículo - Pedro Gadelha.pdf" download="Curriculo_Pedro_Gadelha.pdf" class="cta-btn">
-                    <i class="fas fa-download"></i> Baixar currículo
-                </a>
-            </div>
+          <p class="project-number">001</p>
+          <h3 class="project-name">InvestAlert</h3>
+          <p class="project-desc">Plataforma de monitoramento de investimentos com alertas em tempo real. Backend em Java 17 + Spring Boot 3, JWT auth, Flyway migrations e MapStruct. Frontend em React 19 + TypeScript com React Query, Zustand e dashboards Recharts. Dockerizado com Docker Compose.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Java 17</span>
+            <span class="tech-pill">Spring Boot 3</span>
+            <span class="tech-pill">JWT</span>
+            <span class="tech-pill">Flyway</span>
+            <span class="tech-pill">MapStruct</span>
+            <span class="tech-pill">React 19</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Recharts</span>
+            <span class="tech-pill">Docker</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Sobre -->
-    <section id="about">
-        <h2>Sobre Mim</h2>
-        <p>
-            Sou estudante de <strong>Ciência da Computação</strong> e <strong>Desenvolvedor Full Stack em formação</strong>, com foco principal em <strong>Backend</strong>, especializado na criação de APIs REST seguras, escaláveis e bem estruturadas. Atualmente no 5º semestre da UNIFOR com previsão de conclusão em 2028.
-        </p>
-        <h3>Formação Acadêmica</h3>
-        <p>Bacharelado em Ciência da Computação – UNIFOR<br>5º semestre (2024 - 2027)</p>
-        <h3>Objetivos</h3>
-        <p>Busco oportunidades onde possa aplicar e expandir meus conhecimentos em desenvolvimento backend e full stack, contribuindo para projetos desafiadores e inovadores.</p>
-        <h3>Cursos Complementares</h3>
-        <ul>
-            <li>Algoritmos e Lógica de Programação – 30,5h</li>
-            <li>Java Completo: Programação Orientada a Objetos + Projetos – 54,5h</li>
-            <li>Curso Fullstack Digital College (Em andamento)</li>
-        </ul>
-        <h3>Conhecimentos Técnicos</h3>
-        <ul>
-            <li>Programação Orientada a Objetos (POO)</li>
-            <li>Estruturas de Dados</li>
-            <li>Análise de Algoritmos</li>
-            <li>APIs REST</li>
-            <li>SOLID, GRASP e Clean Code</li>
-            <li>Autenticação e Autorização (JWT)</li>
-            <li>Versionamento de Código (Git/GitHub)</li>
-            <li>Testes Unitários (JUnit, Mockito)</li>
-            <li>Android Development</li>
-        </ul>
-        <h3>Interesses</h3>
-        <p>Backend | Full Stack | Desenvolvimento Android</p>
-    </section>
-
-    <!-- Habilidades -->
-    <section id="skills">
-        <h2>Habilidades Técnicas</h2>
-        <div class="skills-container">
-            <div class="skill-card">
-                <h3>Linguagens</h3>
-                <ul>
-                    <li>Java</li>
-                    <li>JavaScript</li>
-                    <li>TypeScript</li>
-                    <li>Kotlin</li>
-                    <li>SQL</li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <h3>Backend & Frameworks</h3>
-                <ul>
-                    <li>Spring Boot</li>
-                    <li>Spring Security</li>
-                    <li>Node.js / Express</li>
-                    <li>JPA/Hibernate</li>
-                    <li>JWT</li>
-                    <li>Prisma</li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <h3>Frontend & Mobile</h3>
-                <ul>
-                    <li>React (Básico)</li>
-                    <li>Vite</li>
-                    <li>HTML/CSS</li>
-                    <li>Android Development</li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <h3>Banco de Dados & Ferramentas</h3>
-                <ul>
-                    <li>MySQL</li>
-                    <li>MongoDB</li>
-                    <li>Firebase</li>
-                    <li>Git/GitHub</li>
-                    <li>Maven</li>
-                    <li>JUnit/Mockito</li>
-                </ul>
-            </div>
+        <div class="project-links">
+          <span class="project-featured-badge">Destaque</span>
+          <a href="https://github.com/gadelha2005/InvestAlertFrontend" target="_blank" class="project-link"><i class="fab fa-github"></i> Frontend</a>
+          <a href="https://github.com/gadelha2005/agregador-investimento" target="_blank" class="project-link"><i class="fab fa-github"></i> Backend</a>
         </div>
-        
-        <h2 style="margin-top: 3rem;">Soft Skills</h2>
-        <div class="skills-container" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-            <div class="skill-card">
-                <h3>Competências Pessoais</h3>
-                <ul>
-                    <li>Trabalho em Equipe</li>
-                    <li>Resolução de Problemas</li>
-                    <li>Pensamento Analítico</li>
-                    <li>Aprendizado Contínuo</li>
-                    <li>Organização e Gestão de Tempo</li>
-                    <li>Flexibilidade e Proatividade</li>
-                    <li>Inglês Intermediário</li>
-                </ul>
-            </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">002</p>
+          <h3 class="project-name">NextPOS</h3>
+          <p class="project-desc">Sistema PDV fullstack com Node.js/Express + MongoDB no backend e React 18 + TypeScript no frontend. Cobre gestão de produtos, vendas, caixa e email automatizado com Nodemailer. Roteamento com React Router, validação e middleware de segurança. Deploy no Vercel.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">Express</span>
+            <span class="tech-pill">MongoDB</span>
+            <span class="tech-pill">Prisma</span>
+            <span class="tech-pill">React 18</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Vite</span>
+            <span class="tech-pill">Tailwind</span>
+            <span class="tech-pill">Nodemailer</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Projetos-->
-    <section id="projects">
-        <h2>Projetos em Destaque</h2>
-        <div class="projects-grid">
-            <!-- Projeto 1 -->
-            <div class="project-card">
-                <h3>Next POS (PDV System)</h3>
-                <p>Sistema de ponto de venda moderno com frontend em React e backend em Node.js.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>TypeScript</span>
-                        <span>React</span>
-                        <span>Vite</span>
-                        <span>Node.js</span>
-                        <span>Express</span>
-                        <span>MongoDB</span>
-                        <span>Prisma</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/Next_POS" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
-    
-            <!-- Projeto 2 -->
-            <div class="project-card">
-                <h3>FitUnifor</h3>
-                <p>Aplicativo para a academia da Unifor com autenticação e banco de dados em tempo real.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>Kotlin</span>
-                        <span>Firebase</span>
-                        <span>Android</span>
-                        <span>XML</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/FitUnifor" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
-
-            <!-- Projeto 3 -->
-            <div class="project-card">
-                <h3>Food Mind</h3>
-                <p>Sistema que monta refeições para usuários com informações de alimentos consumidos pela API USDA.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>Java</span>
-                        <span>MySQL</span>
-                        <span>Spring Boot</span>
-                        <span>Spring Security</span>
-                        <span>Web Client</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/food_mind" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
-
-             <!-- Projeto 4 -->
-            <div class="project-card">
-                <h3>Hero Hoper</h3>
-                <p>Jogo de plataforma 2D desenvolvido com GDScript inspirado em jogos clássicos.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>GDScript</span>
-                        <span>Godot Engine</span>
-                        <span>Game Development</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/HeroHoper" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
-
-            <!-- Projeto 5 -->
-            <div class="project-card">
-                <h3>Agregador de Investimentos</h3>
-                <p>Agregador de Investimentos utilizando Spring Boot e consumo de API com OpenFeign.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>Java</span>
-                        <span>Spring Boot</span>
-                        <span>OpenFeign</span>
-                        <span>MySQL</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/agregador-investimento" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
-    
-            <!-- Projeto 6 -->
-            <div class="project-card">
-                <h3>Lista de Compras</h3>
-                <p>Sistema para gerenciamento de listas de compras pessoais.</p>
-                <div class="tech-and-link">
-                    <div class="tech-stack">
-                        <span>Java</span>
-                        <span>Spring Boot</span>
-                        <span>MySQL</span>
-                    </div>
-                    <a href="https://github.com/gadelha2005/lista_compras" class="github-link">Ver no GitHub</a>
-                </div>
-            </div>
+        <div class="project-links">
+          <span class="project-featured-badge">Fullstack</span>
+          <a href="https://github.com/gadelha2005/Next_POS" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
         </div>
-    </section>
+      </div>
 
-    <!-- Redes Sociais e Contato -->
-    <section id="social-contact">
-        <h2>Contato</h2>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/pedro-gadelha-b1a05934a/" target="_blank">
-                <i class="fab fa-linkedin"></i> LinkedIn
-            </a>
-            <a href="https://www.instagram.com/_pgadelha/" target="_blank">
-                <i class="fab fa-instagram"></i> Instagram
-            </a>
-            <a href="https://github.com/gadelha2005" target="_blank">
-                <i class="fab fa-github"></i> GitHub
-            </a>
-            <a href="mailto:pgpgadelha123@gmail.com">
-                <i class="fas fa-envelope"></i> Email
-            </a>
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">003</p>
+          <h3 class="project-name">FitUnifor</h3>
+          <p class="project-desc">App Android para gestão da academia da Unifor, em Kotlin com Firebase Auth, Firestore e Storage. Perfis de aluno e personal com acesso diferenciado, fichas de treino, aulas coletivas, vídeos de exercícios, chat com IA e sistema de pontuação. Interface em Material Design com XML.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Kotlin</span>
+            <span class="tech-pill">Firebase Auth</span>
+            <span class="tech-pill">Firestore</span>
+            <span class="tech-pill">Firebase Storage</span>
+            <span class="tech-pill">Material Design</span>
+            <span class="tech-pill">Android</span>
+          </div>
         </div>
-        <div class="email-contact">
-            <p><i class="fas fa-map-marker-alt"></i> Fortaleza - CE | <i class="fas fa-phone"></i> (85) 99150-8409</p>
-            <p><i class="fas fa-graduation-cap"></i> UNIFOR - Ciência da Computação (2024-2027)</p>
-            <p><i class="fas fa-globe"></i> Portfólio: https://gadelha2005.github.io/PortifolioGadelha/</p>
+        <div class="project-links">
+          <span class="project-featured-badge">Mobile</span>
+          <a href="https://github.com/gadelha2005/FitUnifor" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
         </div>
-    </section>
+      </div>
 
-    <script src="code.js"></script>
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">004</p>
+          <h3 class="project-name">Food Mind</h3>
+          <p class="project-desc">Sistema que monta refeições personalizadas com dados de alimentos via API USDA. Backend em Java + Spring Boot com Spring Security, WebClient para consumo de API externa e autenticação JWT.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Java</span>
+            <span class="tech-pill">Spring Boot</span>
+            <span class="tech-pill">Spring Security</span>
+            <span class="tech-pill">WebClient</span>
+            <span class="tech-pill">MySQL</span>
+          </div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/gadelha2005/food_mind" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">005</p>
+          <h3 class="project-name">HeroHoper</h3>
+          <p class="project-desc">Jogo de plataforma 2D desenvolvido com GDScript na Godot Engine, com mecânicas interativas inspiradas em clássicos do gênero.</p>
+          <div class="project-tech">
+            <span class="tech-pill">GDScript</span>
+            <span class="tech-pill">Godot Engine</span>
+            <span class="tech-pill">Game Development</span>
+          </div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/gadelha2005/HeroHoper" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="section-number">04 — CONTATO</span>
+        <h2 class="contact-headline">Vamos <em>conversar</em></h2>
+        <p class="contact-sub">Aberto a estágios, vagas júnior e projetos freelance. Se tiver algo em mente, manda um email.</p>
+        <a href="mailto:pgpgadelha123@gmail.com" class="contact-email">
+          <i class="fas fa-envelope"></i>
+          pgpgadelha123@gmail.com
+        </a>
+      </div>
+      <div class="contact-right reveal">
+        <a href="https://www.linkedin.com/in/pedro-gadelha-b1a05934a/" target="_blank" class="social-link">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://github.com/gadelha2005" target="_blank" class="social-link">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://gadelha2005.github.io/PortifolioGadelha/" target="_blank" class="social-link">
+          <i class="fas fa-globe"></i>
+          <span>Portfólio Online</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://www.instagram.com/_pgadelha/" target="_blank" class="social-link">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="tel:+5585991508409" class="social-link">
+          <i class="fas fa-phone"></i>
+          <span>(85) 99150-8409</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Pedro Gadelha</span></p>
+  <p>Fortaleza · CE · Brasil</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; gsap.to(cursor, { x: mx, y: my, duration: 0 }); });
+(function animateRing() { rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animateRing); })();
+
+// NAV SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// HERO ENTRANCE
+const tl = gsap.timeline({ delay: 0.2 });
+tl.to('.hero-tag',     { opacity: 1, duration: 0.8, ease: 'power3.out' })
+  .to('.hero-name',    { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, '-=0.4')
+  .to('.hero-headline',{ opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.6')
+  .to('.hero-actions', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+  .to('.hero-scroll',  { opacity: 1, duration: 0.6 }, '-=0.3')
+  .to('.hero-stack',   { opacity: 1, duration: 0.6 }, '-=0.5');
+
+// SCROLL REVEALS
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// SKILL GROUPS stagger
+gsap.utils.toArray('.skill-group').forEach((el, i) => {
+  gsap.from(el, {
+    opacity: 0, y: 24, duration: 0.7, ease: 'power3.out', delay: i * 0.08,
+    scrollTrigger: { trigger: '.skills-grid', start: 'top 80%', toggleActions: 'play none none none' }
+  });
+});
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' }); }
+  });
+});
+
+// MOBILE MENU
+function openMobile() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('mobileClose').addEventListener('click', closeMobile);
+
+// MOBILE: reduce animations
+if (window.innerWidth < 768) gsap.globalTimeline.timeScale(1.6);
+</script>
 </body>
 </html>
