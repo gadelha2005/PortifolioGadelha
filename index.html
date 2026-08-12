@@ -390,7 +390,7 @@ footer p span { color: var(--accent); }
       <span class="line2">Paula</span>
     </h1>
     <p class="hero-headline">
-      APIs REST com <strong>Java + Spring Boot</strong>. Interfaces com <strong>React + TypeScript</strong>. Do backend ao frontend.
+      APIs REST com <strong>Java + Spring Boot</strong> e <strong>Node.js + Express + TypeScript</strong>. Interfaces com <strong>React + TypeScript</strong>. Do backend ao frontend.
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary"><i class="fas fa-folder-open"></i> Ver Projetos</a>
@@ -404,6 +404,7 @@ footer p span { color: var(--accent); }
   </div>
   <div class="hero-stack">
     <span>Spring Boot</span>
+    <span>Express</span>
     <span>React</span>
     <span>TypeScript</span>
     <span>Docker</span>
@@ -424,7 +425,7 @@ footer p span { color: var(--accent); }
           <div class="about-photo-ring"></div>
         </div>
         <p>Sou estudante de <strong>Ciência da Computação na Unifor</strong> (6º semestre), com foco em desenvolvimento fullstack — backend sólido e frontend funcional.</p>
-        <p>No backend, construo APIs REST com <strong>Java 17 + Spring Boot</strong>, autenticação JWT, testes com JUnit 5 e Mockito, e infraestrutura com Docker. No frontend, entrego interfaces com <strong>React + TypeScript</strong>, integrações limpas e componentes reutilizáveis.</p>
+        <p>No backend, construo APIs REST com <strong>Java 17 + Spring Boot</strong> e <strong>Node.js + Express + TypeScript</strong>, autenticação JWT, testes com JUnit 5 e Mockito, e infraestrutura com Docker. No frontend, entrego interfaces com <strong>React + TypeScript</strong>, integrações limpas e componentes reutilizáveis.</p>
         <p>Aplico <strong>SOLID, Clean Code e GRASP</strong> porque código limpo é código sustentável. Trabalho com MySQL, MongoDB e Firebase conforme a necessidade do projeto.</p>
         <div class="about-details">
           <div class="detail-item">
@@ -476,35 +477,35 @@ footer p span { color: var(--accent); }
       <span class="section-number">02 — HABILIDADES</span>
       <h2 class="section-title">Stack <em>técnico</em></h2>
     </div>
-
     <div class="skills-grid">
       <div class="skill-group reveal">
         <p class="skill-group-label">Linguagens</p>
         <div class="skill-tags">
           <span class="skill-tag highlight">Java</span>
-          <span class="skill-tag highlight">Javascript</span>
-          <span class="skill-tag highlight">Typescript</span>
-          <span class="skill-tag">C</span>
-          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag highlight">JavaScript</span>
+          <span class="skill-tag highlight">TypeScript</span>
           <span class="skill-tag">Python</span>
-          <span class="skill-tag">Php</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">GDScript</span>
+          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag">PHP</span>
         </div>
       </div>
-
-    <div class="skills-grid">
       <div class="skill-group reveal">
         <p class="skill-group-label">Backend</p>
         <div class="skill-tags">
           <span class="skill-tag highlight">Java 17</span>
           <span class="skill-tag highlight">Spring Boot</span>
           <span class="skill-tag highlight">Spring Security</span>
+          <span class="skill-tag highlight">Node.js</span>
+          <span class="skill-tag highlight">Express</span>
           <span class="skill-tag">JPA / Hibernate</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">Express</span>
           <span class="skill-tag">JWT</span>
           <span class="skill-tag">Maven</span>
           <span class="skill-tag">Flyway</span>
           <span class="skill-tag">OpenFeign</span>
+          <span class="skill-tag">Zod</span>
+          <span class="skill-tag">Swagger / OpenAPI</span>
         </div>
       </div>
       <div class="skill-group reveal">
@@ -512,7 +513,6 @@ footer p span { color: var(--accent); }
         <div class="skill-tags">
           <span class="skill-tag highlight">React 19</span>
           <span class="skill-tag highlight">TypeScript</span>
-          <span class="skill-tag">JavaScript</span>
           <span class="skill-tag">Vite</span>
           <span class="skill-tag">Tailwind CSS</span>
           <span class="skill-tag">React Query</span>
@@ -540,7 +540,7 @@ footer p span { color: var(--accent); }
           <span class="skill-tag">Git / GitHub</span>
           <span class="skill-tag">JUnit 5</span>
           <span class="skill-tag">Mockito</span>
-          <span class="skill-tag">CI/CD (Vercel)</span>
+          <span class="skill-tag">CI/CD (Vercel / Railway)</span>
           <span class="skill-tag">MapStruct</span>
         </div>
       </div>
@@ -560,6 +560,31 @@ footer p span { color: var(--accent); }
       <div class="project-card reveal">
         <div>
           <p class="project-number">001</p>
+          <h3 class="project-name">BuildBox</h3>
+          <p class="project-desc">E-commerce para uma loja de ferragens, com catálogo de produtos (elétrica, hidráulica, ferramentas e tintas), carrinho, checkout, histórico de pedidos, painel de funcionário (gestão de estoque e pedidos) e painel administrativo (produtos, categorias/marcas, usuários e relatórios). Backend em Node.js + Express 5 + TypeScript com Prisma, MySQL, JWT, Zod e documentação via Swagger UI. Frontend em React 19 + TypeScript + Vite. Projeto em dupla com Tiago Rodrigues.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">Express 5</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Prisma</span>
+            <span class="tech-pill">MySQL</span>
+            <span class="tech-pill">JWT</span>
+            <span class="tech-pill">Zod</span>
+            <span class="tech-pill">Swagger</span>
+            <span class="tech-pill">React 19</span>
+            <span class="tech-pill">Vite</span>
+          </div>
+        </div>
+        <div class="project-links">
+          <span class="project-featured-badge">Destaque</span>
+          <a href="https://github.com/gadelha2005/BuildBox" target="_blank" class="project-link"><i class="fab fa-github"></i> Repositório</a>
+          <a href="https://build-box-eight.vercel.app" target="_blank" class="project-link"><i class="fas fa-globe"></i> Produção</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">002</p>
           <h3 class="project-name">InvestAlert</h3>
           <p class="project-desc">Plataforma de monitoramento de investimentos com alertas em tempo real. Backend em Java 17 + Spring Boot 3, JWT auth, Flyway migrations e MapStruct. Frontend em React 19 + TypeScript com React Query, Zustand e dashboards Recharts. Dockerizado com Docker Compose.</p>
           <div class="project-tech">
@@ -575,7 +600,6 @@ footer p span { color: var(--accent); }
           </div>
         </div>
         <div class="project-links">
-          <span class="project-featured-badge">Destaque</span>
           <a href="https://github.com/gadelha2005/InvestAlertFrontend" target="_blank" class="project-link"><i class="fab fa-github"></i> Frontend</a>
           <a href="https://github.com/gadelha2005/agregador-investimento" target="_blank" class="project-link"><i class="fab fa-github"></i> Backend</a>
         </div>
@@ -583,7 +607,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">002</p>
+          <p class="project-number">003</p>
           <h3 class="project-name">NextPOS</h3>
           <p class="project-desc">Sistema PDV fullstack com Node.js/Express + MongoDB no backend e React 18 + TypeScript no frontend. Cobre gestão de produtos, vendas, caixa e email automatizado com Nodemailer. Roteamento com React Router, validação e middleware de segurança. Deploy no Vercel.</p>
           <div class="project-tech">
@@ -606,7 +630,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">003</p>
+          <p class="project-number">004</p>
           <h3 class="project-name">FitUnifor</h3>
           <p class="project-desc">App Android para gestão da academia da Unifor, em Kotlin com Firebase Auth, Firestore e Storage. Perfis de aluno e personal com acesso diferenciado, fichas de treino, aulas coletivas, vídeos de exercícios, chat com IA e sistema de pontuação. Interface em Material Design com XML.</p>
           <div class="project-tech">
@@ -626,7 +650,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">004</p>
+          <p class="project-number">005</p>
           <h3 class="project-name">Food Mind</h3>
           <p class="project-desc">Sistema que monta refeições personalizadas com dados de alimentos via API USDA. Backend em Java + Spring Boot com Spring Security, WebClient para consumo de API externa e autenticação JWT.</p>
           <div class="project-tech">
@@ -644,7 +668,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">005</p>
+          <p class="project-number">006</p>
           <h3 class="project-name">HeroHoper</h3>
           <p class="project-desc">Jogo de plataforma 2D desenvolvido com GDScript na Godot Engine, com mecânicas interativas inspiradas em clássicos do gênero.</p>
           <div class="project-tech">
@@ -708,7 +732,7 @@ footer p span { color: var(--accent); }
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 <span>Pedro Gadelha</span></p>
+  <p>© 2025 <span>Pedro Gadelha</span></p>
   <p>Fortaleza · CE · Brasil</p>
 </footer>
 
