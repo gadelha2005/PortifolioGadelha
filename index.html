@@ -193,9 +193,31 @@ nav.scrolled { background: rgba(12,12,14,0.92); backdrop-filter: blur(12px); bor
 .knowledge-list li { font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 0.7rem; }
 .knowledge-list li::before { content: '→'; color: var(--accent); font-size: 0.7rem; flex-shrink: 0; }
 
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; gap: 2px; }
+.exp-card {
+  background: var(--bg3); border: 1px solid var(--line); border-radius: 4px;
+  padding: 2.5rem 3rem; display: grid; grid-template-columns: 200px 1fr; gap: 3rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.4s, background 0.4s;
+}
+.exp-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--accent); transform: scaleY(0);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); transform-origin: bottom;
+}
+.exp-card:hover { border-color: rgba(110,231,183,0.15); background: #1a1a1f; }
+.exp-card:hover::before { transform: scaleY(1); }
+.exp-period { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.exp-place { font-size: 0.8rem; color: var(--muted); }
+.exp-role { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; line-height: 1.1; margin-bottom: 0.4rem; }
+.exp-company { font-size: 0.95rem; color: var(--text); margin-bottom: 1.5rem; }
+.exp-tasks { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+.exp-tasks li { font-size: 0.9rem; color: var(--muted); line-height: 1.7; display: flex; gap: 0.7rem; }
+.exp-tasks li::before { content: '→'; color: var(--accent); font-size: 0.7rem; margin-top: 0.45rem; flex-shrink: 0; }
+
 /* SKILLS */
-#skills {}
-.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .skill-group {
   background: var(--bg2); border: 1px solid var(--line); border-radius: 6px;
   padding: 2rem; transition: border-color 0.3s;
@@ -217,7 +239,6 @@ nav.scrolled { background: rgba(12,12,14,0.92); backdrop-filter: blur(12px); bor
 .skill-tag.highlight { color: var(--text); border-color: rgba(110,231,183,0.2); background: rgba(110,231,183,0.04); }
 
 /* PROJECTS */
-#projects { background: var(--bg2); }
 .projects-list { display: flex; flex-direction: column; gap: 2px; }
 .project-card {
   background: var(--bg3); border: 1px solid var(--line);
@@ -257,6 +278,11 @@ nav.scrolled { background: rgba(12,12,14,0.92); backdrop-filter: blur(12px); bor
   padding: 0.25rem 0.6rem; border-radius: 2px; text-transform: uppercase;
 }
 
+/* SECTION BACKGROUNDS (alternados) */
+#skills { background: var(--bg2); }
+#skills .skill-group { background: var(--bg3); }
+#academic { background: var(--bg2); }
+
 /* CONTACT */
 #contact {}
 .contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: start; }
@@ -288,7 +314,7 @@ nav.scrolled { background: rgba(12,12,14,0.92); backdrop-filter: blur(12px); bor
 /* FOOTER */
 footer {
   border-top: 1px solid var(--line); padding: 2.5rem 3rem;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
 }
 footer p { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
 footer p span { color: var(--accent); }
@@ -297,11 +323,11 @@ footer p span { color: var(--accent); }
 .mobile-menu {
   display: none; position: fixed; inset: 0; z-index: 99;
   background: rgba(12,12,14,0.98); backdrop-filter: blur(20px);
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
-  font-family: var(--serif); font-size: 2.5rem; color: var(--text);
+  font-family: var(--serif); font-size: 2.2rem; color: var(--text);
   text-decoration: none; opacity: 0; transform: translateY(20px);
   animation: mobileLink 0.4s forwards;
 }
@@ -310,6 +336,8 @@ footer p span { color: var(--accent); }
 .mobile-menu a:nth-child(4) { animation-delay: 0.15s; }
 .mobile-menu a:nth-child(5) { animation-delay: 0.2s; }
 .mobile-menu a:nth-child(6) { animation-delay: 0.25s; }
+.mobile-menu a:nth-child(7) { animation-delay: 0.3s; }
+.mobile-menu a:nth-child(8) { animation-delay: 0.35s; }
 @keyframes mobileLink { to { opacity: 1; transform: none; } }
 .mobile-close {
   position: absolute; top: 1.5rem; right: 1.5rem;
@@ -338,6 +366,7 @@ footer p span { color: var(--accent); }
   .skills-grid { grid-template-columns: 1fr; }
   .project-card { grid-template-columns: 1fr; padding: 1.75rem; }
   .project-links { flex-direction: row; align-items: center; }
+  .exp-card { grid-template-columns: 1fr; gap: 1rem; padding: 1.75rem; }
   footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
   .hero-name { font-size: clamp(2.8rem, 10vw, 4.5rem); }
 }
@@ -358,8 +387,10 @@ footer p span { color: var(--accent); }
   <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
   <a href="#home" onclick="closeMobile()">Home</a>
   <a href="#about" onclick="closeMobile()">Sobre</a>
+  <a href="#experience" onclick="closeMobile()">Experiência</a>
   <a href="#skills" onclick="closeMobile()">Skills</a>
   <a href="#projects" onclick="closeMobile()">Projetos</a>
+  <a href="#academic" onclick="closeMobile()">Acadêmicos</a>
   <a href="#contact" onclick="closeMobile()">Contato</a>
 </div>
 
@@ -368,8 +399,10 @@ footer p span { color: var(--accent); }
   <a href="#home" class="nav-logo">Pedro<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#about">Sobre</a></li>
+    <li><a href="#experience">Experiência</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projetos</a></li>
+    <li><a href="#academic">Acadêmicos</a></li>
     <li><a href="#contact">Contato</a></li>
     <li><a href="Pedro_Gadelha_Curriculo.pdf" download class="nav-cv">Baixar CV</a></li>
   </ul>
@@ -463,7 +496,44 @@ footer p span { color: var(--accent); }
             <li>Versionamento com Git/GitHub</li>
             <li>Android Development (Kotlin)</li>
             <li>Docker & CI/CD (Vercel)</li>
+            <li>Redes & Suporte de TI</li>
+            <li>Automação (RPA) & Integração de Sistemas</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section">
+    <div class="section-header reveal">
+      <span class="section-number">02 — EXPERIÊNCIA</span>
+      <h2 class="section-title">Onde <em>atuo</em></h2>
+    </div>
+    <div class="exp-list">
+      <div class="exp-card reveal">
+        <div>
+          <p class="exp-period">SET/2026 — ATUAL</p>
+          <p class="exp-place">Fortaleza, CE</p>
+        </div>
+        <div>
+          <h3 class="exp-role">Estagiário de TI</h3>
+          <p class="exp-company">Grupo Carmais</p>
+          <ul class="exp-tasks">
+            <li>Atendimento de chamados de suporte técnico aos usuários.</li>
+            <li>Gestão de acessos e permissões de usuários em sistemas.</li>
+            <li>Apoio na automação de processos com RPA e na integração com CRM.</li>
+            <li>Apoio na integração entre sistemas.</li>
+          </ul>
+          <div class="project-tech">
+            <span class="tech-pill">Suporte de TI</span>
+            <span class="tech-pill">Gestão de acessos</span>
+            <span class="tech-pill">RPA</span>
+            <span class="tech-pill">CRM</span>
+            <span class="tech-pill">Integração de sistemas</span>
+          </div>
         </div>
       </div>
     </div>
@@ -474,7 +544,7 @@ footer p span { color: var(--accent); }
 <section id="skills">
   <div class="section">
     <div class="section-header reveal">
-      <span class="section-number">02 — HABILIDADES</span>
+      <span class="section-number">03 — HABILIDADES</span>
       <h2 class="section-title">Stack <em>técnico</em></h2>
     </div>
     <div class="skills-grid">
@@ -544,6 +614,19 @@ footer p span { color: var(--accent); }
           <span class="skill-tag">MapStruct</span>
         </div>
       </div>
+      <div class="skill-group reveal">
+        <p class="skill-group-label">Redes & Infra de TI</p>
+        <div class="skill-tags">
+          <span class="skill-tag highlight">Redes de Computadores</span>
+          <span class="skill-tag">TCP/IP</span>
+          <span class="skill-tag">Suporte Técnico / Help Desk</span>
+          <span class="skill-tag">Gestão de Acessos</span>
+          <span class="skill-tag">Troubleshooting</span>
+          <span class="skill-tag">RPA</span>
+          <span class="skill-tag">CRM</span>
+          <span class="skill-tag">Integração de Sistemas</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -552,7 +635,7 @@ footer p span { color: var(--accent); }
 <section id="projects">
   <div class="section">
     <div class="section-header reveal">
-      <span class="section-number">03 — PROJETOS</span>
+      <span class="section-number">04 — PROJETOS</span>
       <h2 class="section-title">Em <em>destaque</em></h2>
     </div>
     <div class="projects-list">
@@ -608,6 +691,37 @@ footer p span { color: var(--accent); }
       <div class="project-card reveal">
         <div>
           <p class="project-number">003</p>
+          <h3 class="project-name">Food Mind</h3>
+          <p class="project-desc">Sistema que monta refeições personalizadas com dados de alimentos via API USDA. Backend em Java + Spring Boot com Spring Security, WebClient para consumo de API externa e autenticação JWT.</p>
+          <div class="project-tech">
+            <span class="tech-pill">Java</span>
+            <span class="tech-pill">Spring Boot</span>
+            <span class="tech-pill">Spring Security</span>
+            <span class="tech-pill">WebClient</span>
+            <span class="tech-pill">MySQL</span>
+          </div>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/gadelha2005/food_mind" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC PROJECTS -->
+<section id="academic">
+  <div class="section">
+    <div class="section-header reveal">
+      <span class="section-number">05 — ACADÊMICOS</span>
+      <h2 class="section-title">Projetos <em>acadêmicos</em></h2>
+    </div>
+    <div class="projects-list">
+
+      <div class="project-card reveal">
+        <div>
+          <p class="project-number">001</p>
           <h3 class="project-name">NextPOS</h3>
           <p class="project-desc">Sistema PDV fullstack com Node.js/Express + MongoDB no backend e React 18 + TypeScript no frontend. Cobre gestão de produtos, vendas, caixa e email automatizado com Nodemailer. Roteamento com React Router, validação e middleware de segurança. Deploy no Vercel.</p>
           <div class="project-tech">
@@ -630,7 +744,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">004</p>
+          <p class="project-number">002</p>
           <h3 class="project-name">FitUnifor</h3>
           <p class="project-desc">App Android para gestão da academia da Unifor, em Kotlin com Firebase Auth, Firestore e Storage. Perfis de aluno e personal com acesso diferenciado, fichas de treino, aulas coletivas, vídeos de exercícios, chat com IA e sistema de pontuação. Interface em Material Design com XML.</p>
           <div class="project-tech">
@@ -650,25 +764,7 @@ footer p span { color: var(--accent); }
 
       <div class="project-card reveal">
         <div>
-          <p class="project-number">005</p>
-          <h3 class="project-name">Food Mind</h3>
-          <p class="project-desc">Sistema que monta refeições personalizadas com dados de alimentos via API USDA. Backend em Java + Spring Boot com Spring Security, WebClient para consumo de API externa e autenticação JWT.</p>
-          <div class="project-tech">
-            <span class="tech-pill">Java</span>
-            <span class="tech-pill">Spring Boot</span>
-            <span class="tech-pill">Spring Security</span>
-            <span class="tech-pill">WebClient</span>
-            <span class="tech-pill">MySQL</span>
-          </div>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/gadelha2005/food_mind" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div>
-          <p class="project-number">006</p>
+          <p class="project-number">003</p>
           <h3 class="project-name">HeroHoper</h3>
           <p class="project-desc">Jogo de plataforma 2D desenvolvido com GDScript na Godot Engine, com mecânicas interativas inspiradas em clássicos do gênero.</p>
           <div class="project-tech">
@@ -691,7 +787,7 @@ footer p span { color: var(--accent); }
   <div class="section">
     <div class="contact-grid">
       <div class="reveal">
-        <span class="section-number">04 — CONTATO</span>
+        <span class="section-number">06 — CONTATO</span>
         <h2 class="contact-headline">Vamos <em>conversar</em></h2>
         <p class="contact-sub">Aberto a estágios, vagas júnior e projetos freelance. Se tiver algo em mente, manda um email.</p>
         <a href="mailto:pgpgadelha123@gmail.com" class="contact-email">
